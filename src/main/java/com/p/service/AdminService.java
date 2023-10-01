@@ -10,6 +10,5 @@ import com.p.entity.Admin;
  * @since 2023-09-25 14:53:12
  */
 public interface AdminService extends IService<Admin> {
-public boolean selectByIdAndPassword(Admin admin);
 
 }

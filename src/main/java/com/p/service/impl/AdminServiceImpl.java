@@ -17,17 +17,5 @@ import java.util.Objects;
  */
 @Service("adminService")
 public class AdminServiceImpl extends ServiceImpl<AdminDao,Admin> implements AdminService {
-    @Autowired
-    AdminDao adminDao;
 
-    @Override
-    public boolean selectByIdAndPassword(Admin admin) {
-        Admin returnAdmin=adminDao.selectById(admin.getId());
-        if(returnAdmin!=null){
-            if(Objects.equals(returnAdmin.getPassword(), admin.getPassword())){
-                return true;
-            };
-        }
-        return false;
-    }
 }

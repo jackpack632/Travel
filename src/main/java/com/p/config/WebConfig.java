@@ -16,7 +16,9 @@ public class WebConfig implements WebMvcConfigurer {//配置类，用于配置�
         registry.addInterceptor(loginCheckInterceptor)//添加拦截器
                 .addPathPatterns("/**")//拦截路径，/*代表一级路径，/**代表多级路径
                 .excludePathPatterns("/Login")
-                .excludePathPatterns("/WeatherRoadSystem");//放行路径，除了指定路径，其他都拦截
+                .excludePathPatterns("/register")
+                .excludePathPatterns("/HotelSystem/*")
+                .excludePathPatterns("/Spot/**");//放行路径，除了指定路径，其他都拦截
 
 
     }

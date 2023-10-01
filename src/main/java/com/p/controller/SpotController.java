@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/WeatherRoadSystem")
-public class WeatherRoadSystemController {
+@RequestMapping("/Spot")
+public class SpotController {
     @Autowired
     private SpotService spotService;
     @GetMapping
     public R list(){
-        return new R().success(spotService.list(),"查询成功");
+        List list = spotService.list();
+        return new R().success(list,"查询成功");
     }
 }
