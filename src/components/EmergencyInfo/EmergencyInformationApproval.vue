@@ -2,7 +2,7 @@
   <div class="emergency-approval">
     <h2>审批旅游应急信息</h2>
     <el-table :data="approvalList" style="width: 100%">
-      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column prop="title" label="信息分类"></el-table-column>
       <el-table-column prop="content" label="内容"></el-table-column>
       <el-table-column prop="validity" label="有效期">
         <template slot-scope="scope">

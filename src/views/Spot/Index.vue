@@ -2,7 +2,7 @@
   <div>
     <el-container>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="200px" >
         <LeftMenu
             :defaultActive="defaultActive"
             :menuItems="menuItems"
@@ -25,8 +25,7 @@ export default {
     return {
       defaultActive: "1",
       menuItems: [
-        { index:"1", title: "查询餐饮娱乐", icon: "el-icon-menu",path:"/DiningEntertainmentSystem" },
-        {  index:"2",title: "查询演出团体", icon: "el-icon-document",path:"/DiningEntertainmentSystem/2" },
+        {index:"1", title: "查询景区信息", icon: "el-icon-menu",path:"/Spot" },
       ]
     };
   }
@@ -41,11 +40,11 @@ line-height: 60px;
 }
 
 .el-aside {
-  height: 91vh;
 background-color: #D3DCE6;
 color: #333;
 text-align: center;
 line-height: 200px;
+  height: 91vh;
 }
 
 .el-main {

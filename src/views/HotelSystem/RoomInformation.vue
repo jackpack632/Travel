@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import RoomInformation from '@/components/StarHotel/RoomInformation.vue';
+import RoomInformation from '@/components/Hotel/RoomInformation.vue';
 
 export default {
   components: {

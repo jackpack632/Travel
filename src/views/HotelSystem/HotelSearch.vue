@@ -1,15 +1,15 @@
 <template>
   <div class="visitor-page">
-    <TouristRouteQuery />
+    <HotelSearch />
   </div>
 </template>
 
 <script>
-import TouristRouteQuery from '@/components/SpotsAndRouter/TouristRouteQuery.vue';
+import HotelSearch from '@/components/Hotel/HotelSearch.vue';
 
 export default {
   components: {
-    TouristRouteQuery
+    HotelSearch
   },
 };
 </script>

@@ -9,10 +9,10 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" class="demo-ruleForm">
       <el-main>
         <el-form-item style="margin-bottom: 10px;">
-          <el-input v-model="ruleForm.name" placeholder="用户名"></el-input>
+          <el-input v-model="ruleForm.id" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item style="margin-bottom: 10px;">
-          <el-input v-model="ruleForm.email" placeholder="邮箱"></el-input>
+          <el-input v-model="ruleForm.e_mail" placeholder="邮箱"></el-input>
         </el-form-item>
         <el-form-item style="margin-bottom: 10px;">
           <el-input v-model="ruleForm.password" type="password" placeholder="密码"></el-input>
@@ -48,10 +48,10 @@ export default {
     return {
       RegisterVisible: false,
       ruleForm: {
-        name: '',
+        id: '',
         password: '',
         confirmPassword: '',
-        email: ''
+        e_mail: ''
       },
       rules: {
         name: [
@@ -74,24 +74,42 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
+    submitForm() {
+      axios.post("http://"+this.$serverIP+":8081/register", this.ruleForm).then((res) => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: '注册成功',
+            type: 'success'
+          });
+          this.closeForm();
         } else {
-          console.log('error submit!!');
-          return false;
+          this.$message({
+            message: res.data.msg,
+            type: 'error'
+          });
         }
+      }).catch((err) => {
+        this.$message({
+          message: '注册失败，系统出现问题',
+          type: 'error'
+        });
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
     closeForm() {
-      this.$emit('register', "close");
+      this.$emit('register', "close");//监听到点击关闭按钮，触发父组件的close事件
     },
     login() {
       this.$emit('register', "login");
+    }
+  },mounted() {
+    this.ruleForm={
+      id: '',
+      password: '',
+      confirmPassword: '',
+      e_mail: ''
     }
   }
 }

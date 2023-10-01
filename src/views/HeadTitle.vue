@@ -11,11 +11,8 @@
       <el-menu-item @click="handleMenuSelect('Home')">首页</el-menu-item>
       <el-menu-item @click="handleMenuSelect('ComplaintSystem')">投诉</el-menu-item>
       <el-menu-item @click="handleMenuSelect('EmergencyInfo')">旅游应急信息</el-menu-item>
-      <el-menu-item @click="handleMenuSelect('HotelSystem')">星级酒店</el-menu-item>
-      <el-menu-item @click="handleMenuSelect('NonStarHotelSystem')">非星级酒店及乡村旅游酒店</el-menu-item>
-      <el-menu-item @click="handleMenuSelect('ScenicSystem')">旅游景区及线路查询</el-menu-item>
-      <el-menu-item @click="handleMenuSelect('DiningEntertainmentSystem')">餐饮娱乐及演出团体</el-menu-item>
-      <el-menu-item @click="handleMenuSelect('WeatherRoadSystem')">天气及路况</el-menu-item>
+      <el-menu-item @click="handleMenuSelect('HotelSystem')">酒店查询</el-menu-item>
+      <el-menu-item @click="handleMenuSelect('Spot')">旅游景区查询</el-menu-item>
 
       <el-menu-item class="el-icon-user" @click="toggleLoginForm()">登录</el-menu-item>
       </el-menu>

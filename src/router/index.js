@@ -53,71 +53,22 @@ const routes = [
       {
         path: '/HotelSystem',
         name: 'HotelSystem',
-        component: () => import('@/views/StarHotelSystem/Index.vue'),
+        component: () => import('@/views/HotelSystem/Index.vue'),
         children: [{
           path: '',
-          component: () => import('@/views/StarHotelSystem/HotelSearch.vue')
+          component: () => import('@/views/HotelSystem/HotelSearch.vue')
         },{
           path: '2',
-          component: () => import('@/views/StarHotelSystem/RoomInformation.vue')
-        },{
-          path: '3',
-          component: () => import('@/views/StarHotelSystem/HotelMarketing.vue')
+          component: () => import('@/views/HotelSystem/RoomInformation.vue')
         }
         ]
-      },
-      {
-        path: '/NonStarHotelSystem',
-        name: 'NonStarHotelSystem',
-        component: () => import('@/views/NonStarHotelSystem/Index.vue'),
-        children: [{
-          path: '',
-          component: () => import('@/views/NonStarHotelSystem/NonStarHotelQuery.vue')
-        },{
-          path: '2',
-          component: () => import('@/views/NonStarHotelSystem/RoomInfoEntry.vue')
-        },{
-            path: '3',
-            component: () => import('@/views/NonStarHotelSystem/HotelMarketingEntry.vue')
-        }
-        ]
-      },
-      {
-        path: '/ScenicSystem',
-        name: 'ScenicSystem',
-        component: () => import('@/views/ScenicSystem/Index.vue'),
-        children: [{
-          path: '',
-          component: () => import('@/views/ScenicSystem/TouristAttractionQuery.vue')
-        },{
-          path: '2',
-          component: () => import('@/views/ScenicSystem/TouristRouteQuery.vue')
-        }
-        ]
-      },
-      {
-        path: '/DiningEntertainmentSystem',
-        name: 'DiningEntertainmentSystem',
-        component: () => import('@/views/DiningEntertainmentSystem/Index.vue'),
-        children: [{
-          path: '',
-          component: () => import('@/views/DiningEntertainmentSystem/DiningEntertainmentQuery.vue')
-          },{
-          path: '2',
-           component: () => import('@/views/DiningEntertainmentSystem/EntertainmentGroupQuery.vue')
-          }
-          ]
-      },
-      {
-        path: '/WeatherRoadSystem',
-        name: 'WeatherRoadSystem',
-        component: () => import('@/views/WeatherRoadSystem/Index.vue'),
+      }, {
+        path: '/Spot',
+        name: 'Spot',
+        component: () => import('@/views/Spot/Index.vue'),
         children: [{
                   path: '',
-                  component: () => import('@/views/WeatherRoadSystem/WeatherQuery.vue')
-                },{
-                  path: '2',
-                  component: () => import('@/views/WeatherRoadSystem/RoadQuery.vue')
+                  component: () => import('@/views/Spot/SpotInfo.vue')
                 }
               ]
       },{

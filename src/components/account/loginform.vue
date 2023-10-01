@@ -9,12 +9,9 @@
       <el-main>
         <el-form-item>
           <div class="prefix-container">
-            <el-select v-model="prefix" class="prefix-selector">
-              <el-option value="+86" label="+86"></el-option>
-            </el-select>
             <el-input
                 v-model="ruleForm.id"
-                placeholder="请输入手机号"
+                placeholder="请输入账号"
                 class="left-align input-with-prefix">
             </el-input>
           </div>
@@ -33,9 +30,6 @@
         <div class="footer-links">
           <div class="register-link">
             <el-button type="text" @click="register">没有账号？注册账号</el-button>
-          </div>
-          <div class="forgot-password">
-            <a href="#">忘记密码? 找回密码</a>
           </div>
         </div>
       </el-main>
@@ -138,7 +132,7 @@ export default {
       prefix: '+86',
       rules: {
         name: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { required: true, message: '请输入账号', trigger: 'blur' },
           { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
         ],
         password: [
@@ -158,7 +152,7 @@ export default {
     submitForm(formName) {
       axios.post("http://"+this.$serverIP+":8081/Login",this.ruleForm).then((res)=>{
         if(res.data.code===200){
-          this.$message.success("登录成功")
+          this.$message.success(res.data.msg)
           localStorage.setItem('token', res.data.data);//将token存储在localStorage中
           this.$emit('close', 'close');
           this.$emit('login', 'login');

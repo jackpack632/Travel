@@ -19,17 +19,21 @@
 <script>
 import LeftMenu from "@/components/com/LeftMenu.vue";
 
+import { checkAdminRole } from '@/utils/CheckAdmin';
 export default {
   components: {LeftMenu},
   data() {
     return {
-      defaultActive: "1",
-      menuItems: [
-        {index:"1",   title: "非星级酒店查询", icon: "el-icon-menu",path:"/NonStarHotelSystem" },
-        { index:"2",  title: "非星级酒店房间信息", icon: "el-icon-document",path:"/NonStarHotelSystem/2" },
-        {index:"3",   title: "非星级酒店营销", icon: "el-icon-setting" ,path:"/NonStarHotelSystem/3"}
-      ]
-    };
+    components: {LeftMenu},
+    defaultActive: "1",
+    menuItems: [{index:"1", title: "星级酒店查询", icon: "el-icon-menu",path:"/HotelSystem" }],
+  }
+  },
+  methods: {
+  },mounted() {
+    if(checkAdminRole()){
+      this.menuItems.push({ index:"2", title: "星级酒店信息", icon: "el-icon-document",path:"/HotelSystem/2" });
+    }
   }
 };
 </script>
@@ -67,3 +71,4 @@ body > .el-container {
   line-height: 320px;
 }
 </style>
+
