@@ -21,7 +21,10 @@ axios.interceptors.response.use((response)=>{
             type: "warning",
             showCancelButton: false,
             showClose: false
-        }).then(() => { window.location.href = '/Home' })//跳转首页
+        }).then(() => {
+            //删除token
+            localStorage.removeItem("token")
+            window.location.href = '/Home' })//跳转首页
             .catch(() => { window.location.href = '/Home' })//跳转首页
             return response
         default://都不相同执行该行

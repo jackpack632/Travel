@@ -6,9 +6,9 @@
         <el-select v-model="value" placeholder="请选择景区">
           <el-option
               v-for="item in options"
-              :key="item.spotId"
+              :key="item.spotName"
               :label="item.spotName"
-              :value="item.spotId"
+              :value="item.spotName"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -20,9 +20,12 @@
         :data="tableData"
         style="width: 100%">
       <el-table-column
-          prop="name"
-          label="景区名称"
-          width="180">
+          prop="spotName"
+          label="景区名称">
+      </el-table-column>
+      <el-table-column
+          prop="spotMsg"
+          label="景区信息">
       </el-table-column>
     </el-table>
 
@@ -49,8 +52,9 @@ export default {
       });
     },
     select() {
-      // 假设根据选择的景区进行路况查询，并将结果存储在this.roadConditions中
-      // 示例：this.roadConditions = yourQueryResults;
+      axios.get("http://" + this.$serverIP + ":8081/Spot/" + this.value).then((res) => {
+        this.tableData = res.data.data;
+      });
     },
   },
 };

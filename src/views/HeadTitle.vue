@@ -14,7 +14,11 @@
       <el-menu-item @click="handleMenuSelect('HotelSystem')">酒店查询</el-menu-item>
       <el-menu-item @click="handleMenuSelect('Spot')">旅游景区查询</el-menu-item>
 
-      <el-menu-item class="el-icon-user" @click="toggleLoginForm()">登录</el-menu-item>
+      <el-menu-item v-if="username==='登录'" class="el-icon-user" @click="toggleLoginForm()">登录</el-menu-item>
+      <el-submenu v-if="username!=='登录'">
+        <template slot="title">{{ username }}</template>
+        <el-menu-item  @click="logOut()" >退出登录</el-menu-item>
+      </el-submenu>
       </el-menu>
     </el-header>
     <loginForm @close="ShowLoginForm" :dialogVisibleProp="LoginFormVisible"></loginForm>
@@ -44,10 +48,17 @@
   font-weight: bold;
   margin:0 .8rem;
 }
+.el-submenu{
+  color:#fff;
+  font-size: 1rem;
+  font-weight: bold;
+  margin:0 .8rem;
+}
 </style>
 <script>
 import loginForm from '@/components/account/loginform.vue';
 import register from "@/components/account/register.vue";
+import {checkAdminRole} from "@/utils/CheckAdmin";
 export default {
   created() {
     if (this.$route.path === '/Home') {
@@ -62,12 +73,18 @@ export default {
   data() {
     return {
       LoginFormVisible: false,
-      RegisterVisible: false
+      RegisterVisible: false,
+      username:"登录"
     };
   },methods: {
     toggleLoginForm() {
       this.LoginFormVisible = true;
-
+    },
+    logOut(){
+      localStorage.removeItem("token");
+      this.username="登录";
+      //刷新
+      window.location.reload();
     },
     ShowLoginForm(flag) {
       if(flag==="close"){
@@ -87,6 +104,10 @@ export default {
       if (this.$route.path !== route) { // 检查是否已经在相同的路由上
         this.$router.push(route); // 跳转到指定路由
       }
+    }
+  },mounted() {
+    if(checkAdminRole()){
+      this.username=checkAdminRole();
     }
   }
 };

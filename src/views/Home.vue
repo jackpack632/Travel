@@ -14,7 +14,6 @@ export default {
         <div class="content">
           <h3>旅游是一种信仰</h3>
           <h3>和我们一起去远方,寻找诗和梦想</h3>
-          <a href="#" class="btn">查看更多</a>
         </div></section>
     <el-carousel  style="position:relative;z-index:0" height="650px" :interval="5000" arrow="always">
       <el-carousel-item v-for="image in images" :key="image">

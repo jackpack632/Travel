@@ -6,9 +6,9 @@
         <el-select v-model="value" placeholder="请选择景区">
           <el-option
               v-for="item in options"
-              :key="item.spotId"
+              :key="item.spotName"
               :label="item.spotName"
-              :value="item.spotId"
+              :value="item.spotName"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -18,7 +18,7 @@
     </el-form>
       <el-table :data="tableData" style="width: 100%">
         <!-- 酒店列 -->
-        <el-table-column label="酒店" prop="hotelId"></el-table-column>
+        <el-table-column label="酒店名称" prop="hotelName"></el-table-column>
 
         <!-- 酒店是否为星级列 -->
         <el-table-column label="酒店是否为星级" prop="hotelStar"></el-table-column>

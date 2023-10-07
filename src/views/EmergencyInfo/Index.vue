@@ -18,6 +18,7 @@
 
 <script>
 import LeftMenu from "@/components/com/LeftMenu.vue";
+import {checkAdminRole} from "@/utils/CheckAdmin";
 
 export default {
   components: {LeftMenu},
@@ -25,13 +26,16 @@ export default {
     return {
       defaultActive: "1",
       menuItems: [
-        {index:"1", title: "发布旅游应急信息", icon: "el-icon-menu",path:"/EmergencyInfo" },
-        { index:"2",title: "审批旅游应急信息", icon: "el-icon-document",path:"/EmergencyInfo/2" },
-        {index:"3", title: "修改旅游应急信息", icon: "el-icon-setting" ,path:"/EmergencyInfo/3"},
-        { index:"4",title: "删除旅游应急信息", icon: "el-icon-setting" ,path:"/EmergencyInfo/4"},
-        {index:"5", title: "查询旅游应急信息", icon: "el-icon-setting" ,path:"/EmergencyInfo/5"},
+        {index:"1", title: "查询旅游应急信息", icon: "el-icon-setting" ,path:"/EmergencyInfo"},
       ]
     };
+  },
+  methods: {
+  }
+  ,mounted() {
+    if(checkAdminRole()==="admin"){//管理员
+      this.menuItems.push({ index:"2", title: "旅游应急信息调整", icon: "el-icon-document",path:"/EmergencyInfo/2" });
+    }
   }
 };
 </script>

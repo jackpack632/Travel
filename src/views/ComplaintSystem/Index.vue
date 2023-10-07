@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-container>
-    <el-container>
       <el-aside width="200px">
         <LeftMenu
             :defaultActive="defaultActive"
@@ -11,7 +10,6 @@
       <el-main>
         <router-view></router-view>
       </el-main>
-    </el-container>
     </el-container>
   </div>
 </template>
@@ -24,8 +22,7 @@ export default {
     return {
       defaultActive: "1",
       menuItems: [
-        {index:"1",  title: "提交、回复投诉", icon: "el-icon-menu",path:"/ComplaintSystem" },
-        { index:"2", title: "查看投诉", icon: "el-icon-document",path:"/ComplaintSystem/2" },
+        { index:"1", title: "查看投诉", icon: "el-icon-document",path:"/ComplaintSystem" },
       ],
     };
   }

@@ -21,9 +21,6 @@ const routes = [
       component: () => import('@/views/ComplaintSystem/Index.vue'),
       children: [{
         path: '',
-        component: () => import('@/views/ComplaintSystem/SubmittingAndResponding.vue')
-      },{
-        path: '2',
         component: () => import('@/views/ComplaintSystem/ViewingComplaints.vue')
       },
       ]
@@ -34,19 +31,10 @@ const routes = [
         component: () => import('@/views/EmergencyInfo/Index.vue'),
         children: [{
           path: '',
-          component: () => import('@/views/EmergencyInfo/EmergencyInformationPublish.vue')
+          component: () => import('@/views/EmergencyInfo/EmergencyList.vue')
         },{
-          path: '2',
-          component: () => import('@/views/EmergencyInfo/EmergencyInformationApproval.vue')
-        },{
-          path: '3',
-          component: () => import('@/views/EmergencyInfo/EmergencyInformationEdit.vue')
-        },{
-          path: '4',
-          component: () => import('@/views/EmergencyInfo/Delete.vue')
-        },{
-          path: '5',
-          component: () => import('@/views/EmergencyInfo/EmergencySearch.vue')
+            path: '2',
+            component: () => import('@/views/EmergencyInfo/EmergencyInfo.vue')
         }
         ]
       },

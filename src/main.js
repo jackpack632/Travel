@@ -5,7 +5,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.config.productionTip = false
-Vue.prototype.$serverIP = '192.168.1.5';//服务器IP
+Vue.prototype.$serverIP = '192.168.40.42'
 Vue.use(ElementUI)
 new Vue({
   router,

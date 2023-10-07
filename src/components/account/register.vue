@@ -9,7 +9,7 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" class="demo-ruleForm">
       <el-main>
         <el-form-item style="margin-bottom: 10px;">
-          <el-input v-model="ruleForm.id" placeholder="用户名"></el-input>
+          <el-input v-model="ruleForm.userName" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item style="margin-bottom: 10px;">
           <el-input v-model="ruleForm.e_mail" placeholder="邮箱"></el-input>
@@ -48,7 +48,7 @@ export default {
     return {
       RegisterVisible: false,
       ruleForm: {
-        id: '',
+        userName: '',
         password: '',
         confirmPassword: '',
         e_mail: ''
@@ -106,7 +106,7 @@ export default {
     }
   },mounted() {
     this.ruleForm={
-      id: '',
+      userName: '',
       password: '',
       confirmPassword: '',
       e_mail: ''

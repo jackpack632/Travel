@@ -21,13 +21,10 @@ export default {
   name: 'EmergencyList',
   data() {
     return {
-      emergencyList: [
-        // 假设这里是从后端获取的旅游应急信息列表数据
-        { title: '紧急通知1', content: '内容1', validity: '2023-12-31' },
-        { title: '紧急通知2', content: '内容2', validity: '2023-12-31' },
-        // ...
-      ]
+      tableData:[]
     };
+  },mounted() {
+    this.getEmergencyList();
   },
   methods: {
     deleteEmergency(index) {
@@ -39,7 +36,6 @@ export default {
     // 调用后端API删除数据
     // }
   }
-};
 </script>
 
 <style scoped>

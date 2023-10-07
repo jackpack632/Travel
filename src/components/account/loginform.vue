@@ -10,7 +10,7 @@
         <el-form-item>
           <div class="prefix-container">
             <el-input
-                v-model="ruleForm.id"
+                v-model="ruleForm.userName"
                 placeholder="请输入账号"
                 class="left-align input-with-prefix">
             </el-input>
@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       ruleForm: {
-        id: '',
+        userName: '',
         password: ''
       },
       prefix: '+86',
@@ -156,6 +156,7 @@ export default {
           localStorage.setItem('token', res.data.data);//将token存储在localStorage中
           this.$emit('close', 'close');
           this.$emit('login', 'login');
+          window.location.reload();
         }else {
           this.$message.error(res.data.msg)
         }

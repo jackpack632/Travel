@@ -16,7 +16,11 @@ export function checkAdminRole() {
         const payloadObject = JSON.parse(decodedPayload);
 
         // 检查 role 是否为 'admin'
-        return payloadObject.role === 'admin';
+        if(payloadObject.role === 'admin') {
+            return 'admin';
+        } else {
+            return payloadObject.userName;//普通用户的id,即username
+        }
     } catch (error) {
         // 如果解析出现错误，返回 false
         return false;

@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div id="complaintList">
       <h2>投诉列表</h2>
       <el-table :data="complaints" style="width: 100%">
@@ -29,45 +28,75 @@
             </el-row>
           </template>
         </el-table-column>
-        <!-- 添加一个空白列 -->
-        <el-table-column label="" width="80"></el-table-column>
-
       </el-table>
+      <!-- 添加/修改对话框 -->
+      <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" @close="handleDialogClose">
+        <el-form :model="editedData">
+          <el-form-item label="投诉编号："><!--仅展示-->
+            {{ editedData.thingid}}
+          </el-form-item>
+          <el-form-item label="投诉时间："><!--仅展示-->
+            {{ editedData.time | formatDate }}
+          </el-form-item>
+          <el-form-item label="投诉内容："><!--用户添加或修改-->
+            <el-input :disabled="notionDisable" v-model="editedData.notion" type="textarea" :rows="3"></el-input>
+          </el-form-item>
+
+          <el-form-item label="投诉用户："><!--仅展示-->
+            {{ editedData.userName}}
+          </el-form-item>
+          <el-form-item label="投诉状态："><!--需修改提交-->
+            {{ editedData.state}}
+          </el-form-item>
+          <el-form-item label="投诉结果："><!--需修改提交-->
+            <el-input :disabled="resultDisable" v-model="editedData.result" type="textarea" :rows="3"></el-input>
+
+          </el-form-item>
+          <el-form-item label="投诉评价："><!--用户评价-->
+            <el-input :disabled="evaluateDisable" v-model="editedData.evaluate" type="textarea" :rows="3"></el-input>
+
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="saveData">提交</el-button>
+            <el-button @click="handleDialogClose">返回</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
     <!-- 其他组件 -->
-    <ComplaintReview  :complaintView="viewComplaint"></ComplaintReview>
-    <ComplaintApproval :complaintApproval="viewComplaint"></ComplaintApproval>
-    <ComplaintHandling :complaintHandling="viewComplaint"></ComplaintHandling>
-
-  </div>
 </template>
 
 <script>
 import axios from '../../utils/Axios'
-import ComplaintReview from "@/components/complaint/ComplaintReview.vue";
-import ComplaintApproval from "@/components/complaint/ComplaintApproval.vue";
-import ComplaintHandling from "@/components/complaint/ComplaintHandling.vue";
+import {checkAdminRole} from "@/utils/CheckAdmin";
 
 export default {
-  components: { ComplaintReview, ComplaintApproval, ComplaintHandling },
   data() {
     return {
+      head: '用户个人投诉列表',
+      buttonsToShow: 'user',
       complaints: [], // 这里模拟投诉数据，实际应从后端获取
-      viewComplaint: {
-        thingid: "暂无数据",
-        notion: "暂无数据",
-        state: "暂无数据"
-      } // 查看的投诉
+      dialogVisible: false,
+      dialogTitle: '',
+      editedData: {},
+      notionDisable:true,
+      resultDisable:true,
+      evaluateDisable:true,
+      username: ''
     };
   },
   mounted() {
-    // 这里可以调用后端API获取投诉列表数据
-    // 示例：this.fetchComplaints();
-    this.getAllComplaints();
+    //获取用户id
+    this.username=checkAdminRole();
+    if(this.username==="admin"){
+      this.head="所有投诉列表";
+      this.buttonsToShow="admin";
+    }
+    this.getUserComplaints();
   },
   methods: {
-    getAllComplaints() {
-      axios.get("http://"+this.$serverIP+":8081/ComplaintSystem").then((res) => {
+    getUserComplaints() {
+      axios.get("http://"+this.$serverIP+":8081/ComplaintSystem/"+this.username).then((res) => {
         if (res.data.code === 200) {
           this.complaints = res.data.data;
         } else {
@@ -90,44 +119,121 @@ export default {
         this.$message.error("获取失败，出现故障");
       });
     },
-    evaluate(id) {
-      document.getElementById("complaintList").style.display = "none";
-      document.getElementsByClassName("complaint-review")[0].style.display = "block";
-      axios.get("http://"+this.$serverIP+":8081/ComplaintSystem/" + id).then((res) => {
-        if (res.data.code === 200) {
-          this.viewComplaint = res.data.data;
-        } else {
-          this.$message.error(res.data.msg);
-        }
-      }).catch((err) => {
-        this.$message.error("获取失败，出现故障");
-      });
+    showEvaluateDialog(row) {
+      this.notionDisable = true;
+      this.resultDisable = true;
+      if(row.state === "已评价") {
+        //TODO:弹出不可修改的提示框，包含已评价的内容
+        this.dialogTitle = '评价投诉';
+        this.dialogVisible = true;
+        this.editedData = { ...row };
+      }else if(row.state === "处理完成") {
+        //TODO:弹出评价框,可以评价
+        this.dialogTitle = '评价投诉';
+        this.dialogVisible = true;
+        this.evaluateDisable = false;
+        this.editedData = { ...row };
+      }else {
+        //显示需要等待处理完成才可以评价
+        this.$message.error("请等待处理完成后再评价");
+      }
+    },showAddDialog() {
+      this.dialogVisible = true;
+      this.dialogTitle = '添加投诉';
+      this.notionDisable = false;
+      this.resultDisable = true;
+      this.editedData = {
+        other:'',
+        userName:this.username,
+        time:new Date(),
+        state:'等待处理'
+      }; // 清空编辑数据
     },
-    approval(id) {
-      document.getElementById("complaintList").style.display = "none";
-      document.getElementsByClassName("complaint-approval")[0].style.display = "block";
-      axios.get("http://"+this.$serverIP+":8081/ComplaintSystem/" + id).then((res) => {
+    showEditDialog(row) {
+      if(row.state === "处理完成"||row.state === "已评价") {
+        this.$message.error("已处理完成或已评价的投诉不可修改");
+      }else {
+        this.dialogVisible = true;
+        this.dialogTitle = '修改投诉信息';
+        this.notionDisable = false;
+        this.resultDisable = true;
+        this.editedData = { ...row };
+      }
+      },
+    handleDialogClose() {
+      this.dialogVisible = false;
+      this.editedData = {}; // 清空编辑数据
+    },handleComplaint(row){
+      this.dialogVisible = true;
+      this.dialogTitle = '处理投诉';
+      this.resultDisable = false;
+      this.editedData = { ...row };
+    },deleteData(row) {
+      // 删除数据的逻辑，可以根据需要发送请求到后端
+      axios.delete("http://"+this.$serverIP+":8081/ComplaintSystem/"+row.thingid).then((res) => {
         if (res.data.code === 200) {
-          this.viewComplaint = res.data.data;
+          this.$message.success(res.data.msg);
         } else {
           this.$message.error(res.data.msg);
         }
-      }).catch((err) => {
-        this.$message.error("获取失败，出现故障");
-      });
-    },
-    handling(id) {
-      document.getElementById("complaintList").style.display = "none";
-      document.getElementsByClassName("complaint-handling")[0].style.display = "block";
-      axios.get("http://"+this.$serverIP+":8081/ComplaintSystem/" + id).then((res) => {
-        if (res.data.code === 200) {
-          this.viewComplaint = res.data.data;
-        } else {
-          this.$message.error(res.data.msg);
-        }
-      }).catch((err) => {
-        this.$message.error("获取失败，出现故障");
-      });
+      }).finally(() => {
+        this.getUserComplaints();
+      })
+
+    },saveData() {
+      // 保存数据的逻辑，可以根据需要发送请求到后端
+      if (this.dialogTitle === '添加投诉') {
+        // 添加数据
+        axios.post("http://"+this.$serverIP+":8081/ComplaintSystem",this.editedData).then((res) => {
+          if (res.data.code === 200) {
+            this.$message.success(res.data.msg);
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        }).finally(() => {
+          this.getUserComplaints();
+        })
+      } else if(this.dialogTitle === '修改投诉信息'){
+        // 修改数据
+        axios.put("http://"+this.$serverIP+":8081/ComplaintSystem",this.editedData).then((res) => {
+          if (res.data.code === 200) {
+            this.$message.success(res.data.msg);
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        }).finally(() => {
+          this.getUserComplaints();
+        })
+      }else if( this.dialogTitle === '评价投诉'){
+        //评价数据
+        this.editedData.state = "已评价";
+        axios.put("http://"+this.$serverIP+":8081/ComplaintSystem",this.editedData).then((res) => {
+          if (res.data.code === 200) {
+            this.$message.success(res.data.msg);
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        }).finally(() => {
+          this.getUserComplaints();
+        })
+      }else if(this.dialogTitle === '处理投诉'){
+        //处理数据
+        this.editedData.state = "处理完成";
+        axios.put("http://"+this.$serverIP+":8081/ComplaintSystem",this.editedData).then((res) => {
+          if (res.data.code === 200) {
+            this.$message.success(res.data.msg);
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        }).finally(() => {
+          this.getUserComplaints();
+        })
+      }
+      this.notionDisable = true;
+      this.resultDisable = true;
+      this.evaluateDisable = true;
+      this.dialogVisible = false;
+      this.editedData = {}; // 清空编辑数据
     }
   },
   filters: {

@@ -1,9 +1,7 @@
 <template>
-    <el-container>
-      <el-main>
+    <div>
     <ComplaintList></ComplaintList>
-      </el-main>
-</el-container>
+    </div>
 </template>
 
 <script>

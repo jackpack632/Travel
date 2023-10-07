@@ -31,7 +31,7 @@ export default {
   },
   methods: {
   },mounted() {
-    if(checkAdminRole()){
+    if(checkAdminRole()==="admin"){
       this.menuItems.push({ index:"2", title: "星级酒店信息", icon: "el-icon-document",path:"/HotelSystem/2" });
     }
   }
