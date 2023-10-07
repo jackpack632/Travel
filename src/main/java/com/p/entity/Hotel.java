@@ -1,6 +1,8 @@
 package com.p.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -8,7 +10,9 @@ import lombok.Data;
  */
 @Data
 public class Hotel implements Serializable {
+    @TableId
     private Integer hotelId;
+    private String hotelName;
 
     private String hotelStar;
 
@@ -20,7 +24,7 @@ public class Hotel implements Serializable {
 
     private String hotelState;
 
-    private Integer spotId;
+    private String spotName;
 
     private static final long serialVersionUID = 1L;
 }

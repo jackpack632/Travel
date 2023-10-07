@@ -18,7 +18,9 @@ public class WebConfig implements WebMvcConfigurer {//配置类，用于配置�
                 .excludePathPatterns("/Login")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/HotelSystem/*")
+                .excludePathPatterns("/EmergencyInfo")
                 .excludePathPatterns("/Spot/**");//放行路径，除了指定路径，其他都拦截
+
 
 
     }

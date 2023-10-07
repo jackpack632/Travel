@@ -10,8 +10,11 @@ import java.util.Objects;
 
 public class Jwt {
     private static final String signKey="penglinmao";
-    private static final long expire=3600000;//一个小时的有效期
+    private static long expire=3600000;//一个小时的有效期
     public String create(Map<String, Object> claims){
+        if(claims.get("role").equals("admin")){
+            expire=3600000*24*7;//管理员的有效期为一周
+        }
         String jwt= Jwts.builder()//链式调用
                 .signWith(SignatureAlgorithm.HS256,signKey)//签名算法，设置加密方式和密钥
                 .setClaims(claims)//设置自定义数据

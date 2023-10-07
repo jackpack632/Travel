@@ -17,7 +17,7 @@ public class RegisterController {
     
     @PostMapping
     public R register(@RequestBody Traveler traveler) {//传入id,password,e_mail
-        if(travelerService.getById(traveler.getId())!=null)
+        if(travelerService.getById(traveler.getUserName())!=null)
             return new R().error("用户已存在");
         travelerService.save(traveler);
         return new R().success();

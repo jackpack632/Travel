@@ -1,15 +1,13 @@
 package com.p.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.p.entity.Msg;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * (Msg)表服务接口
- *
- * @author makejava
- * @since 2023-09-22 15:52:05
- */
+* @author my computer
+* @description 针对表【msg】的数据库操作Service
+* @createDate 2023-10-02 12:04:04
+*/
 public interface MsgService extends IService<Msg> {
 
 }
-

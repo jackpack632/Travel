@@ -1,18 +1,21 @@
 package com.p.entity;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+/**
+ * @TableName msg
+ */
 @Data
-public class Msg  {
-    //紧急信息id
+public class Msg implements Serializable {
     @TableId
-    private Integer msg_id;
-    //信息内容
-    private String msg_notion;
-    //信息状态 已发布/未发布
-    private String msg_state;
+    private Integer msgId;
 
+    private String msgNotion;
 
+    private String msgState;
+
+    private static final long serialVersionUID = 1L;
 }
-

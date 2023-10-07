@@ -27,7 +27,7 @@ public class Complaint { /**
 /**
      * 投诉游客id
      */
-    private Integer visitor_id;
+    private String userName;
 /**
      * 投诉时间
      */

@@ -27,25 +27,25 @@ public class LoginController {
     public R login(@RequestBody User user){
 
         try {
-            if(user.getId().equals("admin")){
-                int code=adminService.getById(user.getId()).getPassword().equals(user.getPassword())?200:400;
+            if(user.getUserName().equals("admin")){
+                int code=adminService.getById(user.getUserName()).getPassword().equals(user.getPassword())?200:400;
                 String msg=code==200?"管理员登陆成功":"登陆失败，用户名或密码错误";
                 //下发令牌
                 if(code==200){
                     HashMap<String, Object> claims=new HashMap<>();
-                    claims.put("id",user.getId());
+                    claims.put("userName",user.getUserName());
                     claims.put("role","admin");
                     String jwt=new Jwt().create(claims);
                     return new R().success(jwt,msg);
                 }
                 return new R().error(msg);
             }else {
-                int code=travelerService.getById(user.getId()).getPassword().equals(user.getPassword())?200:400;
+                int code=travelerService.getById(user.getUserName()).getPassword().equals(user.getPassword())?200:400;
                 String msg=code==200?"用户登陆成功":"登陆失败，用户名或密码错误";
                 //下发令牌
                 if(code==200){
                     HashMap<String, Object> claims=new HashMap<>();
-                    claims.put("id",user.getId());
+                    claims.put("userName",user.getUserName());
                     claims.put("role","traveler");
                     String jwt=new Jwt().create(claims);
                     return new R().success(jwt,msg);

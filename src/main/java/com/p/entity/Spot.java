@@ -16,8 +16,6 @@ import java.io.Serializable;
 @Data
 public class Spot  {
     @TableId
-    private Integer spotId;
-
     private String spotName;
 
     private String spotImg;

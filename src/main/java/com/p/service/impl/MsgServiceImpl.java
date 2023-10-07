@@ -7,13 +7,16 @@ import com.p.service.MsgService;
 import org.springframework.stereotype.Service;
 
 /**
- * (Msg)表服务实现类
- *
- * @author makejava
- * @since 2023-09-22 15:52:05
- */
+* @author my computer
+* @description 针对表【msg】的数据库操作Service实现
+* @createDate 2023-10-02 12:04:04
+*/
 @Service
-public class MsgServiceImpl extends ServiceImpl<MsgDao, Msg> implements MsgService {
+public class MsgServiceImpl extends ServiceImpl<MsgDao, Msg>
+    implements MsgService{
 
 }
+
+
+
 
